@@ -1,0 +1,8 @@
+-- POST valid dog, expect 201 response with saved dog data
+curl -v -H "Content-Type: application/json" -d "{ \"name\": \"Brewster\", \"dob\": \"1986-01-01\", \"sex\": \"Male\", \"breed\": \"Mutt\"}" http://localhost:8080/api/dogs
+
+-- POST invalid dog (dob format incorrect), expect 400
+curl -v -H "Content-Type: application/json" -d "{ \"name\": \"Brewster\", \"dob\": \"01/01/1986\", \"sex\": \"Male\", \"breed\": \"Mutt\"}" http://localhost:8080/api/dogs
+
+-- GET valid dog, expect 200 response with data
+curl -v http://localhost:8080/api/dogs?name=Goldie

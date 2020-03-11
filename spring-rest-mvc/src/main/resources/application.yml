@@ -1,0 +1,14 @@
+spring:
+    h2.console.enabled: true
+    jpa.open-in-view: false
+    
+logging:  level:    root: WARN
+    sun.rmi:
+      loader: WARN
+      transport.tcp: WARN
+    org.apache:
+      tomcat.util.modeler.modules: WARN
+      catalina.session: WARN
+    com.zaxxer.hikari.pool: WARN
+    
+#testing.logs: true
