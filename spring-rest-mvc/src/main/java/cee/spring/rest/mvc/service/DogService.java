@@ -41,14 +41,25 @@ public class DogService {
 				  .collect(Collectors.toList());
 	  }
 
+	  public Optional<DogDto> fetchById(final String id) {
+
+		  return Optional.ofNullable(
+				  dogMapper.getDto(
+						  dogRepo.findById(Integer.valueOf(id)).orElse(null))
+				  );
+	  }
+
 	  public Optional<DogDto> fetchByName(final String name) {
 		  return Optional.ofNullable(dogMapper.getDto(dogRepo.findByName(name)));
 	  }
 
 	  public DogDto save(final DogDto dto) {
 		  log.info("saving {}", dto);
+
 		  Dog entity = dogRepo.save(dogMapper.getEntity(dto));
+
 		  log.info("saved {}", entity);
+
 		  return dogMapper.getDto(entity);
 	  }
 

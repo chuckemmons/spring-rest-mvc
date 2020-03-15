@@ -15,6 +15,7 @@ import lombok.Getter;
 import lombok.ToString;
 
 /**
+ * Data that represents {@link Dog}s.
  * @author chuck
  *
  */
@@ -25,22 +26,21 @@ public enum DogData {
 			.id(1)
 			.name("Goldie")
 			.dob(LocalDate.of(2017, 04, 01))
-			.sex("female")
+			.gender("female")
 			.breed("Yellow English Labrador Retriever"));
 
 	private Integer id;
 	private String name;
 	private LocalDate dob;
-	private String sex;
+	private String gender;
 	private String breed;
-	
-	private DogData(Builder builder) {
+
+	private DogData(final Builder builder) {
 		id = builder.id;
 		name = builder.name;
 		dob = builder.dob;
-		sex = builder.sex;
+		gender = builder.gender;
 		breed = builder.breed;
-
 	}
 
 	public Dog getEntity() {
@@ -48,17 +48,17 @@ public enum DogData {
 				.id(id)
 				.name(name)
 				.dob(dob)
-				.sex(sex)
+				.gender(gender)
 				.breed(breed)
 				.build();
 	}
-	
+
 	public DogDto getDto() {
 		return DogDto.builder()
 				.id(id.toString())
 				.name(name)
 				.dob(dob.format(DateTimeFormatter.ISO_LOCAL_DATE))
-				.sex(sex)
+				.gender(gender)
 				.breed(breed)
 				.build();
 	}
@@ -68,41 +68,41 @@ public enum DogData {
 				.map(DogData::getEntity)
 				.collect(Collectors.toList());
 	}
-	
+
 	public static List<DogDto> getAllDtos() {
 		return Stream.of(values())
 				.map(DogData::getDto)
 				.collect(Collectors.toList());
 	}
- 
-	public static class Builder {
+
+	private static class Builder {
 		Integer id;
 		String name;
 		LocalDate dob;
-		String sex;
+		String gender;
 		String breed;
 
-		Builder id(Integer id) {
+		Builder id(final Integer id) {
 			this.id = id;
 			return this;
 		}
 
-		Builder name(String name) {
+		Builder name(final String name) {
 			this.name = name;
 			return this;
 		}
 
-		Builder dob(LocalDate dob) {
+		Builder dob(final LocalDate dob) {
 			this.dob = dob;
 			return this;
 		}
 
-		Builder sex(String sex) {
-			this.sex = sex;
+		Builder gender(final String gender) {
+			this.gender = gender;
 			return this;
 		}
 
-		Builder breed(String breed) {
+		Builder breed(final String breed) {
 			this.breed = breed;
 			return this;
 		}

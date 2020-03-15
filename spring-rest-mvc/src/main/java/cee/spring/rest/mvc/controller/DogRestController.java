@@ -34,9 +34,17 @@ public class DogRestController {
 
 	public static final String URL = "/api/dogs";
 
-	public static final String GET_BY_ID_PARAM = "?id=";
+	public static final String ID_PARAM = "id";
+
+	public static final String GET_BY_ID_PARAM = "?" + ID_PARAM + "=";
 
 	public static final String GET_BY_ID_URL = URL + GET_BY_ID_PARAM;
+
+	public static final String NAME_PARAM = "name";
+
+	public static final String GET_BY_NAME_PARAM = "?" + NAME_PARAM + "=";
+
+	public static final String GET_BY_NAME_URL = URL + GET_BY_NAME_PARAM;
 
 	public final DogService dogService;
 
@@ -53,7 +61,7 @@ public class DogRestController {
 
 		log.debug("created {}", dto);
 
-		return ResponseEntity.created(URI.create(GET_BY_ID_URL + dto.getId())).body(dto);
+		return ResponseEntity.created(URI.create(getByIdUrl(dto.getId()))).body(dto);
 	}
 
 	@GetMapping
@@ -71,16 +79,36 @@ public class DogRestController {
 		return ResponseEntity.ok().body(dogs);
 	}
 
-	@GetMapping(params = {"name"})
-	public ResponseEntity<DogDto> readByName(@RequestParam("name") final String name) throws NotFoundException {
-		log.debug("received readByName request for name '{}'", name);
+	@GetMapping(params = {ID_PARAM})
+	public ResponseEntity<DogDto> getById(@RequestParam(ID_PARAM) final String id) throws NotFoundException {
+		log.debug("received getById request for {} '{}'", ID_PARAM, id);
+
+		DogDto dog = dogService.fetchById(id)
+								.orElseThrow( () -> new NotFoundException("dog", ID_PARAM, id) );
+
+		log.debug("ok getById, returning: {}", dog);
+
+		return ResponseEntity.ok().body(dog);
+	}
+
+	@GetMapping(params = {NAME_PARAM})
+	public ResponseEntity<DogDto> getByName(@RequestParam(NAME_PARAM) final String name) throws NotFoundException {
+		log.debug("received getByName request for {} '{}'", NAME_PARAM, name);
 
 		DogDto dog = dogService.fetchByName(name)
-								.orElseThrow( () -> new NotFoundException("dog", "name", name) );
+								.orElseThrow( () -> new NotFoundException("dog", NAME_PARAM, name) );
 
 		log.debug("ok readByName, returning: {}", dog);
 
 		return ResponseEntity.ok().body(dog);
+	}
+
+	public static String getByIdUrl(final String id) {
+		return GET_BY_ID_URL + id;
+	}
+
+	public static String getByNameUrl(final String name) {
+		return GET_BY_NAME_URL + name;
 	}
 
 }

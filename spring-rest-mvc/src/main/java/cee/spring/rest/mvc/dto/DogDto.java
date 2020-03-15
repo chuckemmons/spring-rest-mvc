@@ -29,7 +29,7 @@ public class DogDto {
 	private String dob;
 	
 	@NotBlank @Length(max = 6)
-	private String sex;
+	private String gender;
 	
 	@NotBlank @Length(max = 50)
 	private String breed;

@@ -13,13 +13,19 @@ import cee.spring.rest.mvc.dto.DogDto;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * @author chuck
+ * Maps {@link Dog} entities to/from {@link DogDto} dtos.
  *
+ * @author chuck
  */
 @Slf4j
 @Component
 public class DogMapper {
 
+	/**
+	 * Converts a {@link Dog} entity to a {@link DogDto} dto.
+	 * @param entity the Dog to convert.
+	 * @return DogDto representing the given Dog. null if given Dog is null.
+	 */
 	public DogDto getDto(final Dog entity) {
 		log.debug("mapping {}", entity);
 
@@ -36,7 +42,7 @@ public class DogMapper {
 						.id(id)
 						.name(entity.getName())
 						.dob(dob)
-						.sex(entity.getSex())
+						.gender(entity.getGender())
 						.breed(entity.getBreed())
 						.build();
 		}
@@ -44,7 +50,11 @@ public class DogMapper {
 		return dto;
 	}
 
-
+	/**
+	 * Converts a {@link DogDto} dto to a {@link Dog} entity.
+	 * @param dto the DogDto to convert.
+	 * @return Dog representing the given DogDto. null if given DogDto is null.
+	 */
 	public Dog getEntity(final DogDto dto) {
 		log.debug("mapping {}", dto);
 
@@ -61,7 +71,7 @@ public class DogMapper {
 						.id(id)
 						.name(dto.getName())
 						.dob(dob)
-						.sex(dto.getSex())
+						.gender(dto.getGender())
 						.breed(dto.getBreed())
 						.build();
 		}

@@ -39,8 +39,8 @@ public class Dog {
 	@Column(name = "dob", nullable = false)
 	private LocalDate dob;
 
-	@Column(name = "sex", length = 6, nullable = false)
-	private String sex;
+	@Column(name = "gender", length = 6, nullable = false)
+	private String gender;
 
 	@Column(name = "breed", length = 50, nullable = false)
 	private String breed;

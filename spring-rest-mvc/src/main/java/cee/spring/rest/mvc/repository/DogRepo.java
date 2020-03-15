@@ -11,12 +11,13 @@ import org.springframework.stereotype.Repository;
 import cee.spring.rest.mvc.domain.Dog;
 
 /**
- * @author chuck
+ * Repository for {@link Dog}.
  *
+ * @author chuck
  */
 @Repository
 public interface DogRepo extends JpaRepository<Dog, Integer>{
 	List<Dog> findByBreed(String breed);
-	
+
 	Dog findByName(String name);
 }

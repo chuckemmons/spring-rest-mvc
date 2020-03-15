@@ -126,6 +126,6 @@ public class DogRestControllerSliceTest extends RestControllerSliceTest {
 				.breed("Doberman")
 				.dob("2020-01-01")
 				.name("Alistair")
-				.sex("Male");
+				.gender("Male");
 	}
 }
