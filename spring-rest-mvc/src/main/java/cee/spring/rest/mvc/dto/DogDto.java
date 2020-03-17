@@ -3,6 +3,8 @@
  */
 package cee.spring.rest.mvc.dto;
 
+import java.io.Serializable;
+
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -19,7 +21,9 @@ import lombok.Value;
  */
 @Value
 @Builder
-public class DogDto {
+public class DogDto implements Serializable {
+	private static final long serialVersionUID = 3726755995231569228L;
+
 	private String id;
 	
 	@NotBlank @Length(max = 50)
