@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import cee.spring.rest.mvc.dto.DogDto;
 import cee.spring.rest.mvc.service.DogService;
+import cee.spring.rest.mvc.system.exception.ApplicationException;
 import cee.spring.rest.mvc.system.exception.NotFoundException;
 import lombok.extern.slf4j.Slf4j;
 
@@ -57,11 +58,15 @@ public class DogRestController {
 	public ResponseEntity<DogDto> create(@Valid @RequestBody final DogDto dog) {
 		log.debug("received create request for: {}", dog);
 
-		DogDto dto = dogService.save(dog);
+		DogDto savedDog = dogService.save(dog)
+						.orElseThrow(() ->
+							new ApplicationException("unable to save " + dog));
 
-		log.debug("created {}", dto);
+		log.debug("created {}", savedDog);
 
-		return ResponseEntity.created(URI.create(getByIdUrl(dto.getId()))).body(dto);
+		return ResponseEntity
+				.created(URI.create(getByIdUrl(savedDog.getId())))
+				.body(savedDog);
 	}
 
 	@GetMapping

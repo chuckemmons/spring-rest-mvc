@@ -17,8 +17,8 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.ResultActions;
 
+import cee.spring.rest.mvc.data.DogData;
 import cee.spring.rest.mvc.dto.DogDto;
-import cee.spring.rest.mvc.repository.DogData;
 import cee.spring.rest.mvc.service.DogService;
 
 /**
@@ -45,7 +45,7 @@ public class DogRestControllerSliceTest extends RestControllerSliceTest {
 	@Test
 	public void testCreate_returnsCreated() throws Exception {
 		// mock service results
-		when(dogServiceMock.save(dtoBeforeSave)).thenReturn(dtoAfterSave);
+		when(dogServiceMock.save(dtoBeforeSave)).thenReturn(Optional.of(dtoAfterSave));
 		// request create dog
 		ResultActions results = requestCreate(URL, dtoBeforeSave);
 		// verify results

@@ -1,7 +1,7 @@
 /**
  *
  */
-package cee.spring.rest.mvc.repository;
+package cee.spring.rest.mvc.data;
 
 import java.util.List;
 import java.util.stream.Stream;
@@ -12,6 +12,7 @@ import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
 
 import cee.spring.rest.mvc.domain.Dog;
+import cee.spring.rest.mvc.repository.DogRepo;
 import lombok.extern.slf4j.Slf4j;
 
 /**

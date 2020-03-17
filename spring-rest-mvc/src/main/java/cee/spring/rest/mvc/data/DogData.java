@@ -1,7 +1,7 @@
 /**
  *
  */
-package cee.spring.rest.mvc.repository;
+package cee.spring.rest.mvc.data;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;

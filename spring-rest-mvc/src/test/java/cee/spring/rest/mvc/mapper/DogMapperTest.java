@@ -8,9 +8,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.Before;
 import org.junit.Test;
 
+import cee.spring.rest.mvc.data.DogData;
 import cee.spring.rest.mvc.domain.Dog;
 import cee.spring.rest.mvc.dto.DogDto;
-import cee.spring.rest.mvc.repository.DogData;
 
 /**
  * Unit tests for {@link DogMapper}.

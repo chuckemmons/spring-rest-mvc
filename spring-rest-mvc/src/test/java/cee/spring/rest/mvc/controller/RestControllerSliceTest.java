@@ -22,13 +22,10 @@ import org.springframework.test.web.servlet.ResultActions;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import lombok.extern.slf4j.Slf4j;
-
 /**
  * @author chuck
  *
  */
-@Slf4j
 @RunWith(SpringRunner.class)
 public abstract class RestControllerSliceTest {
 

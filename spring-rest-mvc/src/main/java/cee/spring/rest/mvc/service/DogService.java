@@ -7,9 +7,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import javax.inject.Inject;
 import javax.transaction.Transactional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import cee.spring.rest.mvc.domain.Dog;
@@ -30,37 +30,53 @@ public class DogService {
 	  private final DogRepo dogRepo;
 	  private final DogMapper dogMapper;
 
-	  @Autowired
+	  @Inject
 	  public DogService(final DogRepo dogRepo, final DogMapper dogMapper) {
-		  this.dogRepo = dogRepo; this.dogMapper = dogMapper;
+		  this.dogRepo = dogRepo;
+		  this.dogMapper = dogMapper;
 	  }
 
 	  public List<DogDto> fetchAll() {
+		  log.debug("finding all");
+
 		  return dogRepo.findAll().stream()
 				  .map(dogMapper::getDto)
 				  .collect(Collectors.toList());
 	  }
 
-	  public Optional<DogDto> fetchById(final String id) {
+	/**
+	 * @param id - the id of the dog. (must parse to an integer).
+	 */
+	public Optional<DogDto> fetchById(final String id) {
+		log.debug("fetching by id '{}'", id);
 
-		  return Optional.ofNullable(
-				  dogMapper.getDto(
-						  dogRepo.findById(Integer.valueOf(id)).orElse(null))
-				  );
+		  try {
+			  return Optional.ofNullable(
+						dogMapper.getDto(
+							dogRepo.findById(Integer.valueOf(id)).orElse(null)));
+
+		  } catch (NumberFormatException ex) {
+			  throw new IllegalArgumentException(String.format("id must be an integer, not '%s'", id), ex);
+		  }
 	  }
 
 	  public Optional<DogDto> fetchByName(final String name) {
-		  return Optional.ofNullable(dogMapper.getDto(dogRepo.findByName(name)));
+		  log.debug("fetching by name '{}'", name);
+
+		  return Optional.ofNullable(
+				  dogMapper.getDto(
+						  dogRepo.findByName(name)));
 	  }
 
-	  public DogDto save(final DogDto dto) {
-		  log.info("saving {}", dto);
+	  public Optional<DogDto> save(final DogDto dto) {
+		  log.debug("saving {}", dto);
 
-		  Dog entity = dogRepo.save(dogMapper.getEntity(dto));
+		  Dog savedEntity = dogRepo.save(dogMapper.getEntity(dto));
 
-		  log.info("saved {}", entity);
+		  log.debug("saved {}", savedEntity);
 
-		  return dogMapper.getDto(entity);
+		  return Optional.ofNullable(
+				  	dogMapper.getDto(savedEntity));
 	  }
 
 }
